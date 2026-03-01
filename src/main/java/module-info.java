@@ -4,7 +4,6 @@ module com.example.colorfulheartsci {
 
 
     opens com.example.colorfulheartsci553 to javafx.fxml;
-    exports com.example.ColorfulHeartsCi553;
     exports com.example.colorfulheartsci553.game;
     opens com.example.colorfulheartsci553.game to javafx.fxml;
 }

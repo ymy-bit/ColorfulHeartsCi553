@@ -1,6 +1,7 @@
 module com.example.colorfulheartsci {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens com.example.colorfulheartsci553 to javafx.fxml;

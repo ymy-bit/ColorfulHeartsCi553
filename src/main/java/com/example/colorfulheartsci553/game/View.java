@@ -3,12 +3,12 @@ package com.example.colorfulheartsci553.game;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -18,15 +18,16 @@ public class View  {
     public int width;
     public int height;
 
+    public Color backgroundColor = Color.BLACK;
+
     public Pane pane;
     public Canvas canvas;
 
     public Controller controller;
     public Model model;
 
-    public Circle circle;
 
-    int circleMoveSpeed = 5;
+    public GameObject heart;
 
     public View(int w, int h){
         width = w;
@@ -44,12 +45,6 @@ public class View  {
 
         Scene scene = new Scene(pane);
 
-        circle = new Circle((double) width/2, (double) height /2, 20, Color.RED);
-
-        pane.getChildren().add(circle);
-
-
-
         scene.setOnKeyPressed(this::handleOnKeyPressed);
         scene.setOnKeyReleased(this::handleOnKeyReleased);
 
@@ -58,10 +53,26 @@ public class View  {
     }
 
     public void handleOnKeyPressed(KeyEvent event){
-        circle.setCenterX(circle.getCenterX() + circleMoveSpeed);
+        controller.userInputDetected(event);
     }
     public void handleOnKeyReleased(KeyEvent event){
-        System.out.println(event.getCode());
+        controller.userInputReleased(event);
+    }
+
+    public void drawScreen(){
+        synchronized (model) {
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            gc.setFill(backgroundColor);
+            gc.fillRect(0, 0, width, height);
+
+            //place the following line in a function that would take all the game objects from model and puts them in view to draw
+            heart = model.heart;
+            drawGameObject(gc, heart);
+        }
+    }
+
+    public void drawGameObject(GraphicsContext gc, GameObject go){
+        gc.drawImage(go.image, go.topX, go.topY, go.width, go.height);
     }
 
 }

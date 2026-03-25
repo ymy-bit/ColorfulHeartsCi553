@@ -8,11 +8,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window)  {
-        int H = 600;
-        int W = 500;
+        int W = 640;
+        int H = 400;
 
         View view = new View(W, H);
-        Model model = new Model();
+        Model model = new Model(W, H);
         Controller controller = new Controller();
 
         view.controller = controller;
@@ -24,7 +24,7 @@ public class Main extends Application {
         model.controller = controller;
         model.view = view;
 
-
+        model.initialize();
         view.start(window);
 
     }

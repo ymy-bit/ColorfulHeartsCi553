@@ -11,8 +11,9 @@ import javafx.scene.shape.Rectangle;
  * for one specific object</p>
  * @author Younes Mohamed Younes Bashir, ymy-bit
  * @version 0.1
+ *
  */
-public class GameObject {
+public abstract class GameObject {
 
     public int topY ;
     public int topX;
@@ -23,8 +24,15 @@ public class GameObject {
 
 
     /**
-     * <p>Constructor for a game object, will change in future versions to be empty for override. Params follow
-     * parameter for creating shapes using JavaFX</p>
+     * <p>Constructor for a game object which will be used by most objects as other details will be specific for
+     * subclass and cannot be specified.</p>
+     */
+    public GameObject() {
+
+    }
+
+    /**
+     * <p>Details constructor. Applications rare.</p>
      * @param topX left most point
      * @param topY uppermost point
      * @param width width of shape
@@ -32,8 +40,9 @@ public class GameObject {
      * @param image sprite for gameObject
      */
     public GameObject(int topX, int topY, int width, int height,  Image image) {
-        this.topX = topX;
-        this.topY = topY;
+
+        this.topX = topX - height / 2;
+        this.topY = topY -  width / 2;
         this.width = width;
         this.height = height;
         this.image = image;
@@ -41,9 +50,9 @@ public class GameObject {
     }
 
     /**
-     *
+     *<p>This function gets called when an intersection between this object and another one is done. Empty for later implementation inside child of class.</p>
      */
-    public void collision(){
+    public abstract void doCollision();
         
-    }
+
 }

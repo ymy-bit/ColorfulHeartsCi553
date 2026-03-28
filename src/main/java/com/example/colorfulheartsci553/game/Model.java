@@ -1,5 +1,6 @@
 package com.example.colorfulheartsci553.game;
 
+import com.example.colorfulheartsci553.game.Prefabs.redHeart;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 
@@ -36,7 +37,7 @@ public class Model {
         gameRunning = true;
         // create game object, change later to accomidate different soul types
         Image playerImage = new Image(getClass().getResource("/com/example/colorfulheartsci553/images/Soul.png").toExternalForm());
-        heart = new GameObject(width/2, height/2, 30, 30, playerImage);
+        heart = new redHeart(width/2, height/2);
 
         Thread thread = new Thread(this::gameLoop);
         thread.setDaemon(true);

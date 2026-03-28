@@ -25,7 +25,7 @@ public class Model {
     public GameObject heart;
 
     //player stats
-    int speed = 2;
+    int speed = 3   ;
 
     public Model(int w, int h){
         this.width = w;
@@ -59,16 +59,16 @@ public class Model {
     }
 
     public synchronized void playerMovement(){
-        if (playerInput.contains("UP")){
+        if (playerInput.contains("UP") && (heart.topY > 0)){
             heart.topY -= speed;
         }
-        if (playerInput.contains("DOWN")){
+        if (playerInput.contains("DOWN") && (heart.topY < height - heart.height)){
             heart.topY += speed;
         }
-        if (playerInput.contains("LEFT")){
+        if (playerInput.contains("LEFT") && (heart.topX > 0)){
             heart.topX -= speed;
         }
-        if (playerInput.contains("RIGHT")){
+        if (playerInput.contains("RIGHT") && (heart.topX < width-heart.width)){
             heart.topX += speed;
         }
     }

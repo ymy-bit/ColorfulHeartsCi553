@@ -9,7 +9,7 @@ public class Main extends Application {
     @Override
     public void start(Stage window)  {
         int W = 640;
-        int H = 400;
+        int H = 480;
 
         View view = new View(W, H);
         Model model = new Model(W, H);

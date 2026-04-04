@@ -1,16 +1,15 @@
 package com.example.colorfulheartsci553.game;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 
 
 public class View  {
@@ -26,8 +25,12 @@ public class View  {
     public Controller controller;
     public Model model;
 
+    public Label infoText;
 
     public GameObject heart;
+    ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public int score = 0;
+
 
     public View(int w, int h){
         width = w;
@@ -38,12 +41,17 @@ public class View  {
 
     public void start(Stage window)
     {
+        window.setResizable(false);
         pane = new Pane();
 
         canvas = new Canvas(width, height);
         pane.getChildren().add(canvas);
 
+        infoText = new Label("SCORE: " + score);
+        pane.getChildren().add(infoText);
+
         Scene scene = new Scene(pane);
+        scene.getStylesheets().add(getClass().getResource("/com/example/colorfulheartsci553/style.css").toExternalForm());
 
         scene.setOnKeyPressed(this::handleOnKeyPressed);
         scene.setOnKeyReleased(this::handleOnKeyReleased);
@@ -65,14 +73,24 @@ public class View  {
             gc.setFill(backgroundColor);
             gc.fillRect(0, 0, width, height);
 
-            //place the following line in a function that would take all the game objects from model and puts them in view to draw
-            heart = model.heart;
+            retrieveObjects();
             drawGameObject(gc, heart);
+            for(GameObject gameObject : gameObjects){
+                drawGameObject(gc, gameObject);
+            }
+            infoText.setText("Score: " + score);
         }
     }
 
     public void drawGameObject(GraphicsContext gc, GameObject go){
-        gc.drawImage(go.image, go.topX, go.topY, go.width, go.height);
+
+        gc.drawImage(go.sprite, go.topX, go.topY, go.sprite.getWidth(), go.sprite.getHeight());
+    }
+
+    public void retrieveObjects(){
+        heart = model.heart;
+        gameObjects = model.gameObjects;
+        score = model.score;
     }
 
 }

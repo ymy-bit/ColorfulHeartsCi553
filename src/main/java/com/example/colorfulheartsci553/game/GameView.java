@@ -1,5 +1,6 @@
 package com.example.colorfulheartsci553.game;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,27 +13,30 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 
-public class View  {
+public class GameView {
 
     public int width;
     public int height;
 
     public Color backgroundColor = Color.BLACK;
+    public Color gameOverColor = new Color(0, 0, 0, 0.3);
 
     public Pane pane;
     public Canvas canvas;
 
-    public Controller controller;
-    public Model model;
+    public GameController controller;
+    public GameModel model;
 
     public Label infoText;
+    public Label gameOverText;
+    public Label retryText;
 
     public GameObject heart;
     ArrayList<GameObject> gameObjects = new ArrayList<>();
     public int score = 0;
 
 
-    public View(int w, int h){
+    public GameView(int w, int h){
         width = w;
         height = h;
     }
@@ -50,6 +54,8 @@ public class View  {
         infoText = new Label("SCORE: " + score);
         pane.getChildren().add(infoText);
 
+        setGameOverText();
+
         Scene scene = new Scene(pane);
         scene.getStylesheets().add(getClass().getResource("/com/example/colorfulheartsci553/style.css").toExternalForm());
 
@@ -57,7 +63,25 @@ public class View  {
         scene.setOnKeyReleased(this::handleOnKeyReleased);
 
         window.setScene(scene);
-        window.show();
+
+    }
+
+    private void setGameOverText(){
+        gameOverText = new Label("GAME OVER");
+        gameOverText.setId("gameOver");
+        gameOverText.setMinWidth(width);
+        gameOverText.setAlignment(Pos.CENTER);
+        System.out.println(gameOverText.getWidth());
+        gameOverText.setLayoutY(height / 5);
+        pane.getChildren().add(gameOverText);
+
+        retryText = new Label("PRESS ENTER TO RETRY");
+        retryText.setId("retry");
+        retryText.setMinWidth(width);
+        retryText.setAlignment(Pos.CENTER);
+        retryText.setLayoutY(height * 3/4);
+        pane.getChildren().add(retryText);
+
     }
 
     public void handleOnKeyPressed(KeyEvent event){
@@ -72,6 +96,8 @@ public class View  {
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.setFill(backgroundColor);
             gc.fillRect(0, 0, width, height);
+            gameOverText.setVisible(false);
+            retryText.setVisible(false);
 
             retrieveObjects();
             drawGameObject(gc, heart);
@@ -91,6 +117,17 @@ public class View  {
         heart = model.heart;
         gameObjects = model.gameObjects;
         score = model.score;
+    }
+
+    public void gameOver(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(gameOverColor);
+        gc.fillRect(0, 0, width, height);
+
+        gameOverText.setVisible(true);
+        retryText.setVisible(true);
+
+
     }
 
 }

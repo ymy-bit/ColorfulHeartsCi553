@@ -1,15 +1,13 @@
-package com.example.colorfulheartsci553.game.enums;
+package com.example.colorfulheartsci553.enums;
 
 public enum Input {
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    P,
-    T,
     ENTER,
-    G,
     Z,
     X,
-    C
+    C,
+    Q
 }

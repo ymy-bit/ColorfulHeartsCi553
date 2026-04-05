@@ -1,6 +1,6 @@
 package com.example.colorfulheartsci553.game.prefabs;
 
-import com.example.colorfulheartsci553.game.enums.Input;
+import com.example.colorfulheartsci553.enums.Input;
 import com.example.colorfulheartsci553.game.GameObject;
 import javafx.scene.image.Image;
 
@@ -25,7 +25,6 @@ public class Pellet extends GameObject {
 
     @Override
     public void doCollision() {
-        System.out.println("Pellet collision");
         destroyed = true;
     }
 

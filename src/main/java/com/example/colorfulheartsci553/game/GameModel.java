@@ -1,6 +1,7 @@
 package com.example.colorfulheartsci553.game;
 
-import com.example.colorfulheartsci553.game.enums.Input;
+import com.example.colorfulheartsci553.enums.GameState;
+import com.example.colorfulheartsci553.enums.Input;
 import com.example.colorfulheartsci553.game.prefabs.Pellet;
 import com.example.colorfulheartsci553.game.prefabs.redHeart;
 import javafx.application.Platform;
@@ -10,17 +11,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Model {
+public class GameModel {
 
-    View view;
-    Controller controller;
+    GameView view;
+    GameController controller;
 
     //width and height of window
     int width;
     int height;
 
     //checks the state of the game, might change for an enum for other states such as paused or others
-    public boolean gameRunning;
+    public GameState gameState;
     public boolean spawnPellets;
 
     //set holding player inputs for better player controls
@@ -35,13 +36,14 @@ public class Model {
     //timer for spawner, could be changed to its own class.
     int timer;
 
-    public Model(int w, int h){
+    public GameModel(int w, int h){
         this.width = w;
         this.height = h;
     }
 
     public void initialize(){
-        gameRunning = true;
+        gameState = GameState.RUNNING;
+        System.out.println("Game State : " + gameState);
 
         heart = new redHeart(width/2, height/2);
         gameObjects = new ArrayList<>(50);
@@ -57,7 +59,7 @@ public class Model {
 
 
     public void gameLoop(){
-        while(gameRunning){
+        while(gameState == GameState.RUNNING){
             try {
                 playerMovement();
                 scoreHandler();
@@ -73,6 +75,11 @@ public class Model {
         }
 
         System.out.println("Game stopped");
+
+        if(gameState == GameState.OVER){
+            Platform.runLater(view::gameOver);
+        }
+
     }
 
     public synchronized void scoreHandler(){
@@ -94,11 +101,6 @@ public class Model {
 
     public synchronized void spawnPellet(){
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        /*
-        if (!spawnPellets){
-            return;
-        }
-         */
         timer++;
         if (timer == 80){
             for(int i = 0; i < 5; i++){
@@ -125,7 +127,6 @@ public class Model {
 
     public synchronized void cleanUp(){
         gameObjects.removeIf(GameObject::isDestroyed);
-        System.out.println(gameObjects.size());
         gameObjects.trimToSize();
     }
 
@@ -149,33 +150,19 @@ public class Model {
     }
 
 
-    public void gameShutDown(){
+    public synchronized void gameShutDown(){
         System.out.println("Game shut down");
-        gameRunning = false;
+        gameState = GameState.OVER;
     }
 
-    public void setPlayerInput(Input key){
-        switch (key) {
-            case Input.T:
-                System.out.println("T pressed");
-                gameShutDown();
-                return;
-
-            case Input.P:
-                System.out.println("P pressed");
-                spawnPellets = !spawnPellets;
-                return;
-
-            case Input.G:
-                System.out.println("G pressed");
-                System.gc();
-                return;
-
+    public synchronized void setPlayerInput(Input key){
+        if (key == Input.Q) {
+            System.out.println("Q pressed");
+            gameShutDown();
+            return;
         }
-        if (key == Input.ENTER && !gameRunning){
-            gameObjects.clear();
-            gameObjects.trimToSize();
-            System.gc();
+        if (key == Input.ENTER && gameState != GameState.RUNNING){
+            System.out.println("ENTER pressed");
             initialize();
             return;
         }
@@ -183,7 +170,7 @@ public class Model {
 
     }
 
-    public void removePlayerInput(Input key) {
+    public synchronized void removePlayerInput(Input key) {
         playerInput.remove(key);
     }
 }

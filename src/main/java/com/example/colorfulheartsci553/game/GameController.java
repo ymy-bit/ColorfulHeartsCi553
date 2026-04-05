@@ -1,12 +1,12 @@
 package com.example.colorfulheartsci553.game;
 
-import com.example.colorfulheartsci553.game.enums.Input;
+import com.example.colorfulheartsci553.enums.Input;
 import javafx.scene.input.KeyEvent;
 
-public class Controller {
+public class GameController {
 
-    View view;
-    Model model;
+    GameView view;
+    GameModel model;
 
     public void userInputDetected(KeyEvent event) {
         switch (event.getCode()) {
@@ -22,18 +22,11 @@ public class Controller {
             case RIGHT:
                 model.setPlayerInput(Input.RIGHT);
                 break;
-            case T:
-                model.setPlayerInput(Input.T);
-                break;
-            case P:
-                model.setPlayerInput(Input.P);
-                break;
-            case G:
-                model.setPlayerInput(Input.G);
-                break;
             case ENTER:
                 model.setPlayerInput(Input.ENTER);
                 break;
+            case Q:
+                model.setPlayerInput(Input.Q);
             default:
                 break;
         }

@@ -1,4 +1,4 @@
-package com.example.colorfulheartsci553.game.enums;
+package com.example.colorfulheartsci553.enums;
 
 public enum SoulColors {
     justice,

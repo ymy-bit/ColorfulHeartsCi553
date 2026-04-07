@@ -12,6 +12,6 @@ module com.example.colorfulheartsci {
     opens com.example.colorfulheartsci553.utils.enums to javafx.fxml;
     exports com.example.colorfulheartsci553.game.prefabs;
     opens com.example.colorfulheartsci553.game.prefabs to javafx.fxml;
-    exports com.example.colorfulheartsci553.game.tests;
+    exports com.example.colorfulheartsci553.utils.file_manager;
     exports com.example.colorfulheartsci553;
 }

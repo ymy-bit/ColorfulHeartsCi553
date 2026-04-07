@@ -1,16 +1,17 @@
 package com.example.colorfulheartsci553.game;
 
 import com.example.colorfulheartsci553.Launcher;
+import com.example.colorfulheartsci553.utils.file_manager.SaveFile;
 
 public class GameScreenManager {
 
     public GameView view;
 
-    public void start(int W, int H, Launcher launcher)  {
+    public void start(int W, int H, SaveFile saveFile, Launcher launcher)  {
 
 
         view = new GameView(W, H);
-        GameModel model = new GameModel(W, H);
+        GameModel model = new GameModel(W, H, saveFile);
         GameController controller = new GameController();
 
         view.controller = controller;

@@ -36,6 +36,7 @@ public class GameView {
     public Label pauseText;
     public Label unpauseText;
     public Label retryText;
+    public Label saveFailedText;
 
     public GameObject heart;
     ArrayList<GameObject> gameObjects = new ArrayList<>();
@@ -63,7 +64,7 @@ public class GameView {
         StackPane.setAlignment(quitText, Pos.BOTTOM_CENTER);
         pane.getChildren().add(quitText);
 
-        setGameOverPausedText();
+        setExtraText();
 
         scene = new Scene(pane);
         scene.getStylesheets().add(getClass().getResource("/com/example/colorfulheartsci553/style.css").toExternalForm());
@@ -78,7 +79,7 @@ public class GameView {
         return scene;
     }
 
-    private void setGameOverPausedText(){
+    private void setExtraText(){
         gameOverText = new Label("GAME OVER");
         gameOverText.setId("bigText");
         gameOverText.setAlignment(Pos.CENTER);
@@ -100,6 +101,10 @@ public class GameView {
 
         pauseText = new Label("Press P to pause");
         StackPane.setAlignment(pauseText, Pos.TOP_RIGHT);
+
+        saveFailedText = new Label("Failed to save your score.");
+        saveFailedText.setId("saveFailedText");
+        StackPane.setAlignment(saveFailedText, Pos.CENTER);
 
 
         pane.getChildren().addAll(gameOverText,retryText,pausedText,unpauseText, pauseText);
@@ -169,6 +174,10 @@ public class GameView {
         pauseText.setVisible(false);
         pausedText.setVisible(true);
         unpauseText.setVisible(true);
+    }
+
+    public void onSaveFailed(){
+        saveFailedText.setVisible(true);
     }
 
 }

@@ -26,7 +26,7 @@ public class MenuModel {
 
     public void startGame(String name){
         saveFile.setName(name);
-        switchToGame.onSwitchToGame();
+        switchToGame.onSwitchToGame(saveFile);
 
     }
 
@@ -39,7 +39,7 @@ public class MenuModel {
     }
 
     interface SwitchToGameListener {
-        void onSwitchToGame();
+        void onSwitchToGame(SaveFile saveFile);
     }
 
     public void setOnSwitchToGame(SwitchToGameListener switchToGame){

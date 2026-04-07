@@ -2,6 +2,7 @@ package com.example.colorfulheartsci553;
 
 import com.example.colorfulheartsci553.game.GameScreenManager;
 import com.example.colorfulheartsci553.menu.ManuScreenManager;
+import com.example.colorfulheartsci553.utils.file_manager.SaveFile;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -25,8 +26,8 @@ public class Launcher extends Application {
         stage.show();
     }
 
-    public void gameScene(){
-        gameScreen.start(width,height, this);
+    public void gameScene(SaveFile saveFile){
+        gameScreen.start(width,height,saveFile, this);
         primaryStage.setScene(gameScreen.view.getScene());
     }
 

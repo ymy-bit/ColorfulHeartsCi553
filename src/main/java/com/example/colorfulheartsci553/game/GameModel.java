@@ -4,8 +4,11 @@ import com.example.colorfulheartsci553.utils.enums.GameState;
 import com.example.colorfulheartsci553.utils.enums.Input;
 import com.example.colorfulheartsci553.game.prefabs.Pellet;
 import com.example.colorfulheartsci553.game.prefabs.redHeart;
+import com.example.colorfulheartsci553.utils.file_manager.FileManager;
+import com.example.colorfulheartsci553.utils.file_manager.SaveFile;
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +25,7 @@ public class GameModel {
     //width and height of window
     int width;
     int height;
+    SaveFile saveFile;
 
     //checks the state of the game, might change for an enum for other states such as paused or others
     public GameState gameState;
@@ -39,9 +43,10 @@ public class GameModel {
     //timer for spawner, could be changed to its own class.
     int timer;
 
-    public GameModel(int w, int h){
+    public GameModel(int w, int h, SaveFile saveFile){
         this.width = w;
         this.height = h;
+        this.saveFile = saveFile;
     }
 
     public void initialize(){
@@ -167,6 +172,14 @@ public class GameModel {
     }
 
     public synchronized void gameOver(){
+        FileManager fileManager = new FileManager();
+        try {
+            saveFile.setScore(score);
+            fileManager.writeToFile(saveFile);
+        } catch (IOException e){
+            view.onSaveFailed();
+        }
+
         gameState = GameState.OVER;
     }
 

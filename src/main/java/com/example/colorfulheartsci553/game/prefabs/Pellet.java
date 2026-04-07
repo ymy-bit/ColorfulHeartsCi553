@@ -1,6 +1,6 @@
 package com.example.colorfulheartsci553.game.prefabs;
 
-import com.example.colorfulheartsci553.enums.Input;
+import com.example.colorfulheartsci553.utils.enums.Input;
 import com.example.colorfulheartsci553.game.GameObject;
 import javafx.scene.image.Image;
 

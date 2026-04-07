@@ -1,14 +1,15 @@
 package com.example.colorfulheartsci553.game;
 
-import javafx.stage.Stage;
+import com.example.colorfulheartsci553.Launcher;
 
-public class GameMain {
+public class GameScreenManager {
+
+    public GameView view;
+
+    public void start(int W, int H, Launcher launcher)  {
 
 
-    public void start(Stage window, int W, int H)  {
-
-
-        GameView view = new GameView(W, H);
+        view = new GameView(W, H);
         GameModel model = new GameModel(W, H);
         GameController controller = new GameController();
 
@@ -22,7 +23,9 @@ public class GameMain {
         model.view = view;
 
         model.initialize();
-        view.start(window);
+        view.start();
+
+        model.setOnReturnToMenu(launcher::menuScene);
 
     }
 

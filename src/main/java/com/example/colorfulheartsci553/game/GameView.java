@@ -6,29 +6,35 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 
 public class GameView {
 
+    private Scene scene;
+
     public int width;
     public int height;
 
     public Color backgroundColor = Color.BLACK;
-    public Color gameOverColor = new Color(0, 0, 0, 0.3);
+    public Color gameOverlayColor = new Color(0, 0, 0, 0.3);
 
-    public Pane pane;
+    //public Pane pane;
+    public StackPane pane;
     public Canvas canvas;
 
     public GameController controller;
     public GameModel model;
 
     public Label infoText;
+    public Label quitText;
     public Label gameOverText;
+    public Label pausedText;
+    public Label pauseText;
+    public Label unpauseText;
     public Label retryText;
 
     public GameObject heart;
@@ -43,10 +49,9 @@ public class GameView {
 
 
 
-    public void start(Stage window)
+    public void start()
     {
-        window.setResizable(false);
-        pane = new Pane();
+        pane = new StackPane();
 
         canvas = new Canvas(width, height);
         pane.getChildren().add(canvas);
@@ -54,33 +59,50 @@ public class GameView {
         infoText = new Label("SCORE: " + score);
         pane.getChildren().add(infoText);
 
-        setGameOverText();
+        quitText = new Label("Press Q to return to menu");
+        StackPane.setAlignment(quitText, Pos.BOTTOM_CENTER);
+        pane.getChildren().add(quitText);
 
-        Scene scene = new Scene(pane);
+        setGameOverPausedText();
+
+        scene = new Scene(pane);
         scene.getStylesheets().add(getClass().getResource("/com/example/colorfulheartsci553/style.css").toExternalForm());
+        scene.setFill(backgroundColor);
 
         scene.setOnKeyPressed(this::handleOnKeyPressed);
         scene.setOnKeyReleased(this::handleOnKeyReleased);
 
-        window.setScene(scene);
-
     }
 
-    private void setGameOverText(){
-        gameOverText = new Label("GAME OVER");
-        gameOverText.setId("gameOver");
-        gameOverText.setMinWidth(width);
-        gameOverText.setAlignment(Pos.CENTER);
-        System.out.println(gameOverText.getWidth());
-        gameOverText.setLayoutY(height / 5);
-        pane.getChildren().add(gameOverText);
+    public Scene getScene(){
+        return scene;
+    }
 
-        retryText = new Label("PRESS ENTER TO RETRY");
-        retryText.setId("retry");
-        retryText.setMinWidth(width);
+    private void setGameOverPausedText(){
+        gameOverText = new Label("GAME OVER");
+        gameOverText.setId("bigText");
+        gameOverText.setAlignment(Pos.CENTER);
+        gameOverText.setTranslateY(-50);
+
+        retryText = new Label("Press ENTER to retry");
+
         retryText.setAlignment(Pos.CENTER);
-        retryText.setLayoutY(height * 3/4);
-        pane.getChildren().add(retryText);
+        retryText.setTranslateY(+50);
+
+        pausedText = new Label("PAUSED");
+        pausedText.setId("bigText");
+        StackPane.setAlignment(pausedText, Pos.CENTER);
+        pausedText.setTranslateY(-50);
+
+        unpauseText = new Label("Press P to unpause");
+        StackPane.setAlignment(unpauseText, Pos.CENTER);
+        unpauseText.setTranslateY(+50);
+
+        pauseText = new Label("Press P to pause");
+        StackPane.setAlignment(pauseText, Pos.TOP_RIGHT);
+
+
+        pane.getChildren().addAll(gameOverText,retryText,pausedText,unpauseText, pauseText);
 
     }
 
@@ -96,8 +118,6 @@ public class GameView {
             GraphicsContext gc = canvas.getGraphicsContext2D();
             gc.setFill(backgroundColor);
             gc.fillRect(0, 0, width, height);
-            gameOverText.setVisible(false);
-            retryText.setVisible(false);
 
             retrieveObjects();
             drawGameObject(gc, heart);
@@ -119,15 +139,36 @@ public class GameView {
         score = model.score;
     }
 
+    public void gameRunning(){
+        StackPane.setAlignment(infoText, Pos.TOP_LEFT);
+        pauseText.setVisible(true);
+        gameOverText.setVisible(false);
+        retryText.setVisible(false);
+        pausedText.setVisible(false);
+        unpauseText.setVisible(false);
+    }
+
     public void gameOver(){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(gameOverColor);
+        gc.setFill(gameOverlayColor);
         gc.fillRect(0, 0, width, height);
 
+        StackPane.setAlignment(infoText, Pos.CENTER);
+
+        pauseText.setVisible(false);
         gameOverText.setVisible(true);
         retryText.setVisible(true);
+    }
 
+    public void gamePaused(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(gameOverlayColor);
+        gc.fillRect(0, 0, width, height);
 
+        StackPane.setAlignment(infoText, Pos.CENTER);
+        pauseText.setVisible(false);
+        pausedText.setVisible(true);
+        unpauseText.setVisible(true);
     }
 
 }

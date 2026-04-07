@@ -2,7 +2,7 @@
 
 package com.example.colorfulheartsci553.game;
 
-import com.example.colorfulheartsci553.enums.Input;
+import com.example.colorfulheartsci553.utils.enums.Input;
 import javafx.scene.image.Image;
 
 /**

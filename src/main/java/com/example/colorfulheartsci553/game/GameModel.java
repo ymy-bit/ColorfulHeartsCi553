@@ -1,7 +1,7 @@
 package com.example.colorfulheartsci553.game;
 
-import com.example.colorfulheartsci553.enums.GameState;
-import com.example.colorfulheartsci553.enums.Input;
+import com.example.colorfulheartsci553.utils.enums.GameState;
+import com.example.colorfulheartsci553.utils.enums.Input;
 import com.example.colorfulheartsci553.game.prefabs.Pellet;
 import com.example.colorfulheartsci553.game.prefabs.redHeart;
 import javafx.application.Platform;
@@ -15,6 +15,9 @@ public class GameModel {
 
     GameView view;
     GameController controller;
+
+
+    returnToListener returnToMenu;
 
     //width and height of window
     int width;
@@ -44,41 +47,42 @@ public class GameModel {
     public void initialize(){
         gameState = GameState.RUNNING;
         System.out.println("Game State : " + gameState);
+        gameRunningView();
 
         heart = new redHeart(width/2, height/2);
         gameObjects = new ArrayList<>(50);
-        timer = -270;
-        scoreTimer = -270;
+        timer = -120;
+        scoreTimer = -120;
         score = 0;
         spawnPellets = true;
 
-        Thread thread = new Thread(this::gameLoop);
-        thread.setDaemon(true);
-        thread.start();
+        Thread gameThread = new Thread(this::gameLoop);
+        gameThread.setDaemon(true);
+        gameThread.start();
     }
+    
+    
 
 
     public void gameLoop(){
-        while(gameState == GameState.RUNNING){
+        while(gameState != GameState.OVER){
             try {
-                playerMovement();
-                scoreHandler();
-                spawnPellet();
-                pelletMovement();
-                checkIntersection();
-                cleanUp();
-                updateView();
-                Thread.sleep(10);
+                if(gameState == GameState.RUNNING){
+                    playerMovement();
+                    scoreHandler();
+                    spawnPellet();
+                    pelletMovement();
+                    checkIntersection();
+                    cleanUp();
+                    updateView();
+                    Thread.sleep(10);
+                }
             } catch (InterruptedException e) {
                 System.out.println("Game Interrupted");
             }
         }
 
-        System.out.println("Game stopped");
-
-        if(gameState == GameState.OVER){
-            Platform.runLater(view::gameOver);
-        }
+        Platform.runLater(view::gameOver);
 
     }
 
@@ -118,7 +122,7 @@ public class GameModel {
         for (GameObject gameObject : gameObjects){
             if (heart.intersects(gameObject)){
                 gameObject.doCollision();
-                gameShutDown();
+                gameOver();
             }
         }
     }
@@ -148,20 +152,45 @@ public class GameModel {
     public synchronized void updateView(){
         Platform.runLater(view::drawScreen);
     }
+    public synchronized void gameRunningView(){
+        Platform.runLater(view::gameRunning);
+    }
 
+    public synchronized void pauseUnpauseGame(){
+        if (gameState == GameState.RUNNING){
+            gameState = GameState.PAUSED;
+            Platform.runLater(view::gamePaused);
+        } else if  (gameState == GameState.PAUSED){
+            gameState = GameState.RUNNING;
+            Platform.runLater(view::gameRunning);
+        }
+    }
 
-    public synchronized void gameShutDown(){
-        System.out.println("Game shut down");
+    public synchronized void gameOver(){
         gameState = GameState.OVER;
+    }
+
+    //Interface with a function to be called when returning to mainMenu
+    interface returnToListener {
+        void returnToMenu();
+    }
+
+    public void setOnReturnToMenu(returnToListener returnToMenu){
+        this.returnToMenu = returnToMenu;
     }
 
     public synchronized void setPlayerInput(Input key){
         if (key == Input.Q) {
             System.out.println("Q pressed");
-            gameShutDown();
+            returnToMenu.returnToMenu();
             return;
         }
-        if (key == Input.ENTER && gameState != GameState.RUNNING){
+        if (key == Input.P) {
+            System.out.println("P pressed");
+            pauseUnpauseGame();
+            return;
+        }
+        if (key == Input.ENTER && gameState == GameState.OVER){
             System.out.println("ENTER pressed");
             initialize();
             return;
@@ -173,4 +202,6 @@ public class GameModel {
     public synchronized void removePlayerInput(Input key) {
         playerInput.remove(key);
     }
+
+
 }

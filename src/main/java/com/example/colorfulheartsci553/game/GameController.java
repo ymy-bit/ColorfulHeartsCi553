@@ -1,6 +1,6 @@
 package com.example.colorfulheartsci553.game;
 
-import com.example.colorfulheartsci553.enums.Input;
+import com.example.colorfulheartsci553.utils.enums.Input;
 import javafx.scene.input.KeyEvent;
 
 public class GameController {
@@ -27,6 +27,13 @@ public class GameController {
                 break;
             case Q:
                 model.setPlayerInput(Input.Q);
+                break;
+            case P:
+                model.setPlayerInput(Input.P);
+                break;
+            case Z:
+                model.setPlayerInput(Input.Z);
+                break;
             default:
                 break;
         }

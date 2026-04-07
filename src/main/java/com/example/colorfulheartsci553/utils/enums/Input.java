@@ -1,4 +1,4 @@
-package com.example.colorfulheartsci553.enums;
+package com.example.colorfulheartsci553.utils.enums;
 
 public enum Input {
     UP,
@@ -9,5 +9,6 @@ public enum Input {
     Z,
     X,
     C,
-    Q
+    Q,
+    P
 }

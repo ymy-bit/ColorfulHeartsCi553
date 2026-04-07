@@ -1,10 +1,49 @@
-#gameOver{
-    -fx-font-size: 30pt;
+#bigText{
+    -fx-font-size: 50pt;
     -fx-text-fill: white;
     -fx-alignment: center;
 }
 
+#titleText{
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 50pt;
+    -fx-padding: 50px;
+}
+
+.text-field{
+    -fx-max-width: 500px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 10pt;
+    -fx-background-color: transparent;
+}
+
+.CHButton{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 20pt;
+}
+
+.CHButton:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill: yellow;
+    -fx-alignment: center;
+    -fx-font-size: 20pt;
+}
+
 .label {
     -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-font-size: 10pt;
+}
+
+.pane {
+    -fx-background-color: transparent;
+}
+
+.scoresText {
+    -fx-background-color: transparent;
     -fx-font-size: 20pt;
 }

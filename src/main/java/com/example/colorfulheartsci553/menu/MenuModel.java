@@ -1,5 +1,7 @@
 package com.example.colorfulheartsci553.menu;
 
+import com.example.colorfulheartsci553.utils.file_manager.SaveFile;
+
 public class MenuModel {
 
     MenuView view;
@@ -9,13 +11,39 @@ public class MenuModel {
     int width;
     int height;
 
+    SaveFile saveFile;
+
+    SwitchToGameListener switchToGame;
+
     public MenuModel(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public void initialize() {
+    public void initialize(SaveFile saveFile) {
+        this.saveFile = saveFile;
+    }
 
+    public void startGame(String name){
+        saveFile.setName(name);
+        switchToGame.onSwitchToGame();
+
+    }
+
+    public void playClicked(){
+        view.switchPane(view.playMenuPane);
+    }
+
+    public void backClicked(){
+        view.switchPane(view.mainMenuPane);
+    }
+
+    interface SwitchToGameListener {
+        void onSwitchToGame();
+    }
+
+    public void setOnSwitchToGame(SwitchToGameListener switchToGame){
+        this.switchToGame = switchToGame;
     }
 
 

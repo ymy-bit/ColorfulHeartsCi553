@@ -16,8 +16,6 @@ public class FileManager {
 
     public ArrayList<SaveFile> readFromFile() {
         ArrayList<SaveFile> list = new ArrayList<>();
-
-
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
@@ -25,7 +23,6 @@ public class FileManager {
                 if (line.trim().isEmpty()) continue;
 
                 String[] split = line.split(", ");
-
                 if (split.length != 2) continue;
 
                 SaveFile saveFile = new SaveFile();
@@ -36,16 +33,10 @@ public class FileManager {
                     continue;
                 }
                 list.add(saveFile);
-
             }
             reader.close();
-        } catch (IOException ignored) {
-
-        }
-
-
+        } catch (IOException ignored) {}
         return list;
-
     }
 
 

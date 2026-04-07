@@ -18,7 +18,4 @@ public class SaveFile {
     public int getScore() {
         return score;
     }
-
-
-
 }

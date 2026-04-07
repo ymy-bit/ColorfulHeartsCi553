@@ -46,6 +46,4 @@ public class MenuModel {
     public void setOnSwitchToGame(SwitchToGameListener switchToGame){
         this.switchToGame = switchToGame;
     }
-
-
 }

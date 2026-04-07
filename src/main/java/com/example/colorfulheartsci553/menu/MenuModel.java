@@ -25,7 +25,11 @@ public class MenuModel {
     }
 
     public void startGame(String name){
-        saveFile.setName(name);
+        if (name.isEmpty()) {
+            saveFile.setName("no name");
+        } else{
+            saveFile.setName(name);
+        }
         switchToGame.onSwitchToGame(saveFile);
 
     }

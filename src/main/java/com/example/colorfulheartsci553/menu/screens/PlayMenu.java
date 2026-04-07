@@ -27,7 +27,7 @@ public class PlayMenu extends MenuScreen {
         box.setSpacing(10);
 
 
-        Label nameLabel = new Label("Enter your name, only the first 16 characters will be stored.");
+        Label nameLabel = new Label("Enter your name.");
 
 
         name = new TextField();

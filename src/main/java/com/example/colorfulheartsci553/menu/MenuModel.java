@@ -25,11 +25,13 @@ public class MenuModel {
     }
 
     public void startGame(String name){
+        name = name.replace("," , ".");
         if (name.isEmpty()) {
             saveFile.setName("no name");
         } else{
             saveFile.setName(name);
         }
+
         switchToGame.onSwitchToGame(saveFile);
 
     }

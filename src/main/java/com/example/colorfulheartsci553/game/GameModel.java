@@ -29,7 +29,6 @@ public class GameModel {
 
     //checks the state of the game, might change for an enum for other states such as paused or others
     public GameState gameState;
-    public boolean spawnPellets;
 
     //set holding player inputs for better player controls
     Set<Input> playerInput = new HashSet<>();
@@ -39,6 +38,7 @@ public class GameModel {
     public GameObject heart;
     public int score;
     public int scoreTimer;
+    public int pelletDirCounter;
 
     //timer for spawner, could be changed to its own class.
     int timer;
@@ -59,7 +59,8 @@ public class GameModel {
         timer = -120;
         scoreTimer = -120;
         score = 0;
-        spawnPellets = true;
+        pelletDirCounter = 0;
+
 
         Thread gameThread = new Thread(this::gameLoop);
         gameThread.setDaemon(true);
@@ -110,14 +111,32 @@ public class GameModel {
 
     public synchronized void spawnPellet(){
         ThreadLocalRandom random = ThreadLocalRandom.current();
+        int orientation =  0;
+        int speed = 2;
+        if (pelletDirCounter > 5){
+            orientation = random.nextInt(0, 2);
+            speed = 4;
+        }
+
         timer++;
         if (timer == 80){
+
             for(int i = 0; i < 5; i++){
-                Pellet pellet = new Pellet(-10, random.nextInt(0, height));
-                gameObjects.add(pellet);
+                if (orientation == 0){
+                    Pellet pellet = new Pellet(-10, random.nextInt(0, height));
+                    pellet.orientation = 1;
+                    pellet.speed = speed;
+                    gameObjects.add(pellet);
+                } else if (orientation == 1){
+                    Pellet pellet = new Pellet(width + 10, random.nextInt(0, height));
+                    pellet.orientation = -1;
+                    pellet.speed = speed;
+                    gameObjects.add(pellet);
+
+                }
 
             }
-            spawnPellets = false;
+            pelletDirCounter++;
             timer = 0;
         }
 

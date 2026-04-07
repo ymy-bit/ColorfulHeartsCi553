@@ -10,8 +10,8 @@ public class Pellet extends GameObject {
 
     private static final Image pSprite = new Image(Pellet.class.getResource("/com/example/colorfulheartsci553/images/pellet.png").toExternalForm());
 
-    int speed = 2;
-    int orientation = 1; //1 to go right, -1 to go left, it is an int to it can be used in the calculations instead.
+    public int speed = 2;
+    public int orientation = 1; //1 to go right, -1 to go left, it is an int to it can be used in the calculations instead.
 
     boolean destroyed = false;
 

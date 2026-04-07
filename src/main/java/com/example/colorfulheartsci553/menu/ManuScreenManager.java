@@ -14,7 +14,7 @@ public class ManuScreenManager {
 
         view = new MenuView(W, H);
         MenuController controller = new MenuController();
-        MenuModel model = new MenuModel(W, H);
+        MenuModel model = new MenuModel();
 
         view.model = model;
         view.controller = controller;

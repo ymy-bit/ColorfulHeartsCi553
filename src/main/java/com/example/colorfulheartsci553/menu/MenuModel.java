@@ -7,17 +7,12 @@ public class MenuModel {
     MenuView view;
     MenuController controller;
 
-    //width and height of window
-    int width;
-    int height;
 
     SaveFile saveFile;
 
     SwitchToGameListener switchToGame;
 
-    public MenuModel(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public MenuModel() {
     }
 
     public void initialize(SaveFile saveFile) {

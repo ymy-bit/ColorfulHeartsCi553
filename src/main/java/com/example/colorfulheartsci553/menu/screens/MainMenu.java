@@ -1,6 +1,8 @@
 package com.example.colorfulheartsci553.menu.screens;
 
 import com.example.colorfulheartsci553.menu.MenuScreen;
+import com.example.colorfulheartsci553.utils.file_manager.FileManager;
+import com.example.colorfulheartsci553.utils.file_manager.SaveFile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -9,25 +11,29 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+
 
 public class MainMenu extends MenuScreen {
 
 
     private final Button play;
     private final Button quit;
+    VBox scores;
 
     public MainMenu(){
         this.screen = new StackPane();
 
         screen.getStyleClass().add("pane");
 
-        VBox scores = new VBox();
+        scores = new VBox();
         StackPane.setAlignment(scores, Pos.TOP_LEFT);
 
         Label scoresText = new Label("Leader Board");
         scoresText.getStyleClass().add("scoresText");
 
         scores.getChildren().add(scoresText);
+        populateScores();
         scores.getStyleClass().add("pane");
 
         scores.setTranslateY(+140);
@@ -50,6 +56,7 @@ public class MainMenu extends MenuScreen {
 
         vbox.getChildren().addAll(title, play, quit);
         vbox.setAlignment(Pos.TOP_CENTER);
+
         screen.getChildren().addAll(scores, vbox);
 
         screen.setVisible(false);
@@ -61,6 +68,20 @@ public class MainMenu extends MenuScreen {
 
     public void setOnQuitClick(EventHandler<ActionEvent> e){
         quit.setOnAction(e);
+    }
+
+    public void populateScores(){
+        FileManager fileManager = new FileManager();
+        ArrayList<SaveFile> scoresList = fileManager.readFromFile();
+        if(!scoresList.isEmpty()){
+            for(SaveFile score : scoresList){
+                Label l = new Label(score.getName() + ", " + score.getScore());
+                scores.getChildren().add(l);
+            }
+        } else{
+            Label l = new Label("No scores found");
+            scores.getChildren().add(l);
+        }
     }
 
 

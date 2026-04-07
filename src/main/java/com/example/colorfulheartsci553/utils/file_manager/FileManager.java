@@ -8,7 +8,7 @@ public class FileManager {
     final String file = "saveFile.txt";
 
     public void writeToFile(SaveFile saveFile) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
         writer.write(saveFile.getName() + ", " + saveFile.getScore());
         writer.newLine();
         writer.close();

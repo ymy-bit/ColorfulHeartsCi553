@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class MainMenu extends MenuScreen {
@@ -53,11 +54,17 @@ public class MainMenu extends MenuScreen {
         quit  = new Button("Quit");
         quit.getStyleClass().add("CHButton");
 
+        Label copyright = new Label("This is a fan-game of UNDERTALE." +
+                "\nThis game features original recreations of art from UNDERTALE." +
+                "\nUNDERTALE © 2015 by Toby Fox, Temmie Chang & Co." +
+                "\nThis project and its creator are not affiliated with Toby fox.");
+        copyright.getStyleClass().add("copyrightText");
+        StackPane.setAlignment(copyright, Pos.BOTTOM_CENTER);
 
         vbox.getChildren().addAll(title, play, quit);
         vbox.setAlignment(Pos.TOP_CENTER);
 
-        screen.getChildren().addAll(scores, vbox);
+        screen.getChildren().addAll(scores, vbox, copyright);
 
         screen.setVisible(false);
     }
@@ -73,6 +80,10 @@ public class MainMenu extends MenuScreen {
     public void populateScores(){
         FileManager fileManager = new FileManager();
         ArrayList<SaveFile> scoresList = fileManager.readFromFile();
+        scoresList.sort(Comparator.comparingInt(SaveFile::getScore).reversed());
+        if(scoresList.size() > 15){
+            scoresList.subList(15, scoresList.size()).clear();
+        }
         if(!scoresList.isEmpty()){
             for(SaveFile score : scoresList){
                 Label l = new Label(score.getName() + ", " + score.getScore());

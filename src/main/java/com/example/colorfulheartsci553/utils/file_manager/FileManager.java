@@ -16,21 +16,33 @@ public class FileManager {
 
     public ArrayList<SaveFile> readFromFile() {
         ArrayList<SaveFile> list = new ArrayList<>();
+
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
             while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+
                 String[] split = line.split(", ");
+
+                if (split.length != 2) continue;
+
                 SaveFile saveFile = new SaveFile();
                 saveFile.setName(split[0]);
-                saveFile.setScore(Integer.parseInt(split[1]));
+                try {
+                    saveFile.setScore(Integer.parseInt(split[1]));
+                } catch (NumberFormatException e) {
+                    continue;
+                }
                 list.add(saveFile);
 
             }
             reader.close();
-        }  catch (IOException ignored) {
+        } catch (IOException ignored) {
 
         }
+
 
         return list;
 

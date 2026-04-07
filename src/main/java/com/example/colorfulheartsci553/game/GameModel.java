@@ -117,7 +117,6 @@ public class GameModel {
             orientation = random.nextInt(0, 2);
             speed = 4;
         }
-
         timer++;
         if (timer == 80){
 

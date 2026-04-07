@@ -15,10 +15,9 @@ import javafx.scene.layout.VBox;
 
 public class PlayMenu extends MenuScreen {
 
-
-    TextField name;
-    Button start;
-    Button back;
+    private final TextField name;
+    private final Button start;
+    private final Button back;
 
     public PlayMenu(){
         this.screen = new StackPane();

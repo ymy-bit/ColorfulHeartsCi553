@@ -35,9 +35,4 @@ public class Launcher extends Application {
         menuScreen.setMenu(width,height, this);
         primaryStage.setScene(menuScreen.view.getScene());
     }
-
-
-
-
-
 }

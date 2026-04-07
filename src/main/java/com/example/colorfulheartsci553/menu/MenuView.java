@@ -3,7 +3,6 @@ package com.example.colorfulheartsci553.menu;
 import com.example.colorfulheartsci553.menu.screens.*;
 import com.example.colorfulheartsci553.utils.enums.MenuState;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -49,13 +48,8 @@ public class MenuView {
 
         setUpMenus();
 
-
-
         switchPane(mainMenuPane);
         menuState = MenuState.MainMenu;
-
-
-
 
 
         scene = new Scene(primaryPane,  width, height);

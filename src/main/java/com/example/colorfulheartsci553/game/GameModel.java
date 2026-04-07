@@ -103,7 +103,7 @@ public class GameModel {
     public synchronized void pelletMovement(){
         for (GameObject gameObject : gameObjects){
             gameObject.move(Input.RIGHT);
-            if (gameObject.topX > width){
+            if (gameObject.topX > width ||  gameObject.topX < -20){
                 gameObject.doCollision();
             }
         }

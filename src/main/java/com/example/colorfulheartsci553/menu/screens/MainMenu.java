@@ -30,7 +30,7 @@ public class MainMenu extends MenuScreen {
         scores = new VBox();
         StackPane.setAlignment(scores, Pos.TOP_LEFT);
 
-        Label scoresText = new Label("Leader Board");
+        Label scoresText = new Label("Score Board");
         scoresText.getStyleClass().add("scoresText");
 
         scores.getChildren().add(scoresText);
@@ -54,10 +54,14 @@ public class MainMenu extends MenuScreen {
         quit  = new Button("Quit");
         quit.getStyleClass().add("CHButton");
 
-        Label copyright = new Label("This is a fan-game of UNDERTALE." +
-                "\nThis game features original recreations of art from UNDERTALE." +
-                "\nUNDERTALE © 2015 by Toby Fox, Temmie Chang & Co." +
-                "\nThis project and its creator are not affiliated with Toby fox.");
+        Label copyright = new Label("""
+                This is a fan-game of UNDERTALE.\
+                
+                This game features original recreations of art from UNDERTALE.\
+                
+                UNDERTALE © 2015 by Toby Fox, Temmie Chang & Co.\
+                
+                This project and its creator are not affiliated with Toby fox.""");
         copyright.getStyleClass().add("copyrightText");
         StackPane.setAlignment(copyright, Pos.BOTTOM_CENTER);
 
